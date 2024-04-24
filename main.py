@@ -52,5 +52,5 @@ def fetchMemberInfo():
         for member, price, tier_name in query:
             print(f"First Name: {member.first_name}, Last Name: {member.last_name}, Membership Price: {price}, Tier Name: {tier_name}")
 if __name__ == '__main__':
-    #addMember("Tony", "Soprano", "diamond", 150)
+    addMember("Tiger", "Woods", "gold", 75)
     fetchMemberInfo()

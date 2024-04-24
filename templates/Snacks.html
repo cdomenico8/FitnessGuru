@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %} Snacks {% endblock %}
+{% block content %}
+<h2>Snack Bar Inventory</h2>
+<table>
+    <tr>
+        <th></th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Quantity</th>
+    </tr>
+    {% for i in dataBase %}
+        <tr>
+            <td>{{ i.name }}</td>
+            <td>{{ i.price }}</td>
+            <td>{{ i.quantity }}</td>
+        </tr>
+    {% endfor %}
+</table>
+
+<h2>Add Snack Item:</h2>
+<form action="/addsnack" method="post">
+    Name: <input type="text" name="name" value="{{addSnackInput.name}}">
+    price: <input type="instructor" name="size" value="{{addSnackInput.price}}">
+    quantity: <input type="text" name="time" value="{{addSnackInput.quantity}}">
+    <input type="submit">
+</form>
+{% endblock %}
