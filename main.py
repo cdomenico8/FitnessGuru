@@ -22,6 +22,26 @@ class Tier(db.Model):
     tier_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
 
+class Snacks(db.Model):
+    snack_id = db.Column(db.Integer, primary_key=True)
+    snack_name = db.Column(db.String)
+    snack_count = db.Column(db.Integer)
+    unit_price = db.Column(db.Float)
+
+@app.route('/')
+def member_management():
+    members_info = fetchMemberInfo()
+    return render_template('Members.html', members=members_info)
+
+@app.route('/classes')
+def classes():
+    return render_template('ClassSchedule.html')
+
+@app.route('/snacks')
+def snacks():
+    return render_template('Snacks.html')
+
+# this will be used for member management to add members
 def addMember(fname, lname, tier, price):
     with app.app_context():
         tier_num = 0
@@ -41,16 +61,36 @@ def addMember(fname, lname, tier, price):
         db.session.add(insert_membership)
         db.session.commit()
     
-
+#this shows a member's name, tier, and price
+#will probably have to add query results to a array to display on webpage
 def fetchMemberInfo():
     with app.app_context():
-        db.session.commit()
+        #db.session.commit()
         query = db.session.query(Member, Membership.price, Tier.name)\
                     .join(Membership, Member.member_id == Membership.member_id)\
                     .join(Tier, Membership.tier_id == Tier.tier_id).all()
         
+        members_info = []
         for member, price, tier_name in query:
-            print(f"First Name: {member.first_name}, Last Name: {member.last_name}, Membership Price: {price}, Tier Name: {tier_name}")
+            member_info = {
+                'first_name': member.first_name,
+                'last_name': member.last_name,
+                'price': price,
+                'tier_name': tier_name
+            }
+            members_info.append(member_info)
+    return members_info
+
+# this will be used for snack management to view inventory
+#will probably have to add query results to a array to display on webpage
+def fetchSnackInfo():
+    with app.app_context():
+        #db.session.commit()
+        query = db.session.query(Snacks).all()
+        for snack in query:
+            print(f"Snack Name: {snack.snack_name}, Snack Count: {snack.snack_count}, Unit Price: {snack.unit_price}")
+
 if __name__ == '__main__':
-    addMember("Tiger", "Woods", "gold", 75)
-    fetchMemberInfo()
+    with app.app_context():
+        db.create_all()
+    app.run(debug=True)
