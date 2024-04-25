@@ -39,7 +39,8 @@ def classes():
 
 @app.route('/snacks')
 def snacks():
-    return render_template('Snacks.html')
+    snacks_info = fetchSnackInfo()
+    return render_template('Snacks.html', snacks=snacks_info)
 
 # this will be used for member management to add members
 def addMember(fname, lname, tier, price):
@@ -87,9 +88,15 @@ def fetchSnackInfo():
     with app.app_context():
         #db.session.commit()
         query = db.session.query(Snacks).all()
+        snacks_info = []
         for snack in query:
-            print(f"Snack Name: {snack.snack_name}, Snack Count: {snack.snack_count}, Unit Price: {snack.unit_price}")
-
+            snack_info = {
+                'snack_name': snack.snack_name,
+                'snack_count': snack.snack_count,
+                'unit_price': snack.unit_price
+            }
+            snacks_info.append(snack_info)
+    return snacks_info
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()

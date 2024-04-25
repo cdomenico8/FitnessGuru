@@ -4,16 +4,15 @@
 <h2>Snack Bar Inventory</h2>
 <table>
     <tr>
-        <th></th>
         <th>Name</th>
         <th>Price</th>
         <th>Quantity</th>
     </tr>
-    {% for i in snacks %}
+    {% for snack in snacks %}
         <tr>
-            <td>{{ i.snack_name }}</td>
-            <td>{{ i.Unit_price }}</td>
-            <td>{{ i.snack_count }}</td>
+            <td>{{ snack.snack_name }}</td>
+            <td>{{ snack.unit_price }}</td>
+            <td>{{ snack.snack_count }}</td>
         </tr>
     {% endfor %}
 </table>
