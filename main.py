@@ -42,6 +42,15 @@ def snacks():
     snacks_info = fetchSnackInfo()
     return render_template('Snacks.html', snacks=snacks_info)
 
+@app.route('/addsnack', methods=['POST'])
+def addsnack():
+    name = request.form.get('name')
+    price = request.form.get('price')
+    count = request.form.get('count')
+    addSnack(name, price, count)
+    return redirect('/snacks')
+
+
 # this will be used for member management to add members
 def addMember(fname, lname, tier, price):
     with app.app_context():
@@ -97,6 +106,13 @@ def fetchSnackInfo():
             }
             snacks_info.append(snack_info)
     return snacks_info
+
+def addSnack(name, price, count):
+    add_snack = Snacks(snack_name=name, snack_count=count, unit_price=price)
+    with app.app_context():
+        db.session.add(add_snack)
+        db.session.commit()
+        
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
