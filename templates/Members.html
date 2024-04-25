@@ -3,10 +3,10 @@
 {% block content %}
 
 <h2>Tiers:</h2>
-<li>Diamand</li>
+<li>Platnium</li>
 <li>Gold</li>
 <li>Silver</li>
-<h2>Members List:</h2>
+<h2>Members List</h2>
 
 <table>
     <tr>
@@ -15,13 +15,26 @@
         <th>First Name</th>
         <th>Last Name</th>
     </tr>
-    {% for i in members %}
+    {% for i in dataBase %}
         <tr>
             <td>{{ i.id }}</td>
             <td>{{ i.first }}</td>
             <td>{{ i.last }}</td>
-            <td>{{i.price}}</td>
-            <td>{{i.tier_name}}</td>
+        </tr>
+    {% endfor %}
+</table>
+
+<h2>Membership Details:</h2>
+<table>
+    <tr>
+        <th></th>
+        <th>Member_ID</th>
+        <th>Price</th>
+    </tr>
+    {% for i in dataBase %}
+        <tr>
+            <td>{{ i.id }}</td>
+            <td>{{ i.price }}</td>
         </tr>
     {% endfor %}
 </table>
