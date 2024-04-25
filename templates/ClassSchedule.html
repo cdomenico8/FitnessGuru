@@ -1,14 +1,6 @@
 {% extends "base.html" %}
 {% block title %} Class {% endblock %}
 {% block content %}
-<h2>Add Fitness Class:</h2>
-<form action="/add" method="post">
-    Name: <input type="text" name="name" value="{{updateDataInput.Name}}">
-    Instructor: <input type="instructor" name="size" value="{{updateDataInput.instructor}}">
-    time: <input type="text" name="time" value="{{updateDataInput.time}}">
-    days: <input type="text" name="days" value="{{updateDataInput.days}}">
-    <input type="submit">
-</form>
 <h2>Fitness Class Schedule:</h2>
 <br></br>
 <table>
@@ -27,7 +19,6 @@
             <td>{{i.Time}}</td>
             <td>{{i.Days}}</td>
             <td><a href="/delete/{{i.id}}">delete</a></td>
-            <td><a href="/update/{{i.id}}">update</a></td>
         </tr>
     {% endfor %}
 </table>
