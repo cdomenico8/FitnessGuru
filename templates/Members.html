@@ -19,8 +19,10 @@
         <tr>
             <td>{{ member.first_name }}</td>
             <td>{{ member.last_name }}</td>
-            <td>{{ member.tier }}</td>
+            <td>{{ member.tier_name }}</td>
             <td>{{ member.price }}</td>
+            <td><a href="/update_member?first_name={{member.first_name}}&last_name={{member.last_name}}
+            &tier_name={{member.tier_name}}&price={{member.price}}">Update</a></td>
         </tr>
     {% endfor %}
 </table>

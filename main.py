@@ -34,6 +34,14 @@ def member_management():
     members_info = fetchMemberInfo()
     return render_template('Members.html', members=members_info)
 
+@app.route('/update_member')
+def update_member():
+    first_name = request.args.get('first_name')
+    last_name = request.args.get('last_name')
+    tier_name = request.args.get('tier_name')
+    price = request.args.get('price')
+    return render_template('update_member.html',first_name=first_name, last_name=last_name, tier_name=tier_name, price=price)
+
 @app.route('/classes')
 def classes():
     return render_template('ClassSchedule.html')
