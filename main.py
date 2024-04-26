@@ -1,5 +1,6 @@
 from flask import *
 from flask_sqlalchemy import *
+from sqlalchemy import func
 
 db = SQLAlchemy()
 app = Flask(__name__)
@@ -42,6 +43,15 @@ def update_member():
     price = request.args.get('price')
     return render_template('update_member.html',first_name=first_name, last_name=last_name, tier_name=tier_name, price=price)
 
+@app.route('/updateMember', methods=['POST'])
+def updateMember():
+    fname = request.form.get('first_name')
+    lname = request.form.get('last_name')
+    tier = request.form.get('tier_name')
+    price = request.form.get('price')
+    updateMember(fname, lname, tier, price)
+    return redirect('/')
+
 @app.route('/classes')
 def classes():
     return render_template('ClassSchedule.html')
@@ -79,6 +89,35 @@ def addMember(fname, lname, tier, price):
         insert_membership = Membership(member_id=insert_member.member_id, price=price, tier_id=tier_num)
         db.session.add(insert_membership)
         db.session.commit()
+
+def updateMember(fname, lname, tier, price):
+    with app.app_context():
+        fname = fname.strip()
+        lname = lname.strip()
+        #find member in Member db
+        member = Member.query.filter(func.lower(Member.first_name) == func.lower(fname), 
+                             func.lower(Member.last_name) == func.lower(lname)).first()
+        if member:
+            #update member info -> this will need to be changed
+            member.first_name=fname
+            member.last_name=lname
+            db.session.commit()
+            #fetch new tier to get new tier_id
+            get_tier = Tier.query.filter_by(name=tier).first()
+            if get_tier:
+                #find membership entry based on member_id
+                membership = Membership.query.filter_by(member_id=member.member_id).first()
+                if membership:
+                    #update membership info
+                    membership.tier_id = get_tier.tier_id
+                    membership.price = price
+                    db.session.commit()
+                else:
+                    print("Error: unable to fetch membership")
+            else:
+                print("Error: unable to fetch tier")
+        else:
+            print("Error: unable to fetch member")
     
 #this shows a member's name, tier, and price
 #will probably have to add query results to a array to display on webpage
