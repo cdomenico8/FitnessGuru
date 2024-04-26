@@ -3,7 +3,8 @@ from flask_sqlalchemy import *
 
 db = SQLAlchemy()
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database.db?check_same_thread=False"
+app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
 db.init_app(app)
 
 class Member(db.Model):
@@ -45,8 +46,8 @@ def snacks():
 @app.route('/addsnack', methods=['POST'])
 def addsnack():
     name = request.form.get('name')
-    price = request.form.get('price')
-    count = request.form.get('count')
+    price = float(request.form.get('price'))
+    count = int(request.form.get('count'))
     addSnack(name, price, count)
     return redirect('/snacks')
 
@@ -108,8 +109,8 @@ def fetchSnackInfo():
     return snacks_info
 
 def addSnack(name, price, count):
-    add_snack = Snacks(snack_name=name, snack_count=count, unit_price=price)
     with app.app_context():
+        add_snack = Snacks(snack_name=name, snack_count=count, unit_price=price)
         db.session.add(add_snack)
         db.session.commit()
         
