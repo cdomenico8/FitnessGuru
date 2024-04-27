@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %} Update {% endblock %}
+{% block content %}
+<h2>Update Snack:</h2>
+<form action="/updateSnack{{snackData.id}}" method="POST">
+    Name: <input type="text" name="name" value="{{snackData.snack_name}}">
+    Price: <input type="text" name="price" value="{{snackData.unit_price}}">
+    Quantity: <input type="text" name="quantity" value="{{snackData.snack_count}}">
+    <input type="submit">
+</form>
+{% endblock %}
