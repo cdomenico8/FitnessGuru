@@ -61,6 +61,18 @@ def snacks():
     snacks_info = fetchSnackInfo()
     return render_template('Snacks.html', snacks=snacks_info)
 
+@app.route('/updateSnack/<N>', methods=['GET','POST'])
+def updateSnack(N):
+    snackData = Snacks.query.filter_by(id = N).first()
+    if request.method == 'POST':
+        snackData.snack_name = request.form['name']
+        snackData.unit_price = float(request.form['price'])
+        snackData.snack_count = request.form['quantity']
+        db.session.commit()
+        return redirect('/Snacks')
+    else:
+        return render_template('update.html', snackData=snackData)
+
 @app.route('/addsnack', methods=['POST'])
 def addsnack():
     name = request.form.get('name')
