@@ -1,13 +1,7 @@
 {% extends "base.html" %}
 {% block title %} Members {% endblock %}
 {% block content %}
-
-<h2>Tiers:</h2>
-<li>Platnium</li>
-<li>Gold</li>
-<li>Silver</li>
-<h2>Members List</h2>
-
+<h1>Member Management Page</h1>
 <table>
     <tr>
         <th>First Name</th>
@@ -34,7 +28,7 @@
 <h2>Add a New Member:</h2>
 <form action="/addMember" method="POST">
     First Name: <input type="text" name="first_name" value="">
-    Last Name: <input type="instructor" name="last_name" value="">
+    Last Name: <input type="text" name="last_name" value="">
     Tier: <select name="tier_name">
         <option value="silver">Silver</option>
         <option value="gold">Gold</option>
