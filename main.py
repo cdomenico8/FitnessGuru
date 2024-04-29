@@ -35,21 +35,39 @@ def member_management():
     members_info = fetchMemberInfo()
     return render_template('Members.html', members=members_info)
 
+@app.route('/addMember', methods=['POST'])
+def add_member():
+    first_name = request.form.get('first_name')
+    last_name = request.form.get('last_name')
+    tier_name = request.form.get('tier_name')
+    price = int(request.form.get('price'))
+    addMember(first_name, last_name, tier_name, price)
+    return redirect('/')
+
+@app.route('/delete_member', methods=['POST'])
+def delete_member():
+    member_id = request.form.get('member_id')
+    deleteMember(member_id)
+    return redirect('/')
+
+
 @app.route('/update_member')
 def update_member():
+    member_id = request.args.get('member_id')
     first_name = request.args.get('first_name')
     last_name = request.args.get('last_name')
     tier_name = request.args.get('tier_name')
     price = request.args.get('price')
-    return render_template('update_member.html',first_name=first_name, last_name=last_name, tier_name=tier_name, price=price)
+    return render_template('update_member.html',member_id=member_id, first_name=first_name, last_name=last_name, tier_name=tier_name, price=price)
 
 @app.route('/updateMember', methods=['POST'])
 def updateMember():
+    member_id = request.form.get('member_id')
     fname = request.form.get('first_name')
     lname = request.form.get('last_name')
     tier = request.form.get('tier_name')
     price = request.form.get('price')
-    updateMember(fname, lname, tier, price)
+    updateMember(member_id, fname, lname, tier, price)
     return redirect('/')
 
 @app.route('/classes')
@@ -86,11 +104,11 @@ def addsnack():
 def addMember(fname, lname, tier, price):
     with app.app_context():
         tier_num = 0
-        if tier.lower() == "silver":
+        if tier == "silver":
             tier_num = 1
-        elif tier.lower() == "gold":
+        elif tier == "gold":
             tier_num = 2
-        elif tier.lower() == "diamond":
+        elif tier == "diamond":
             tier_num = 3
         else:
             print("Invalid tier name entered")
@@ -102,13 +120,12 @@ def addMember(fname, lname, tier, price):
         db.session.add(insert_membership)
         db.session.commit()
 
-def updateMember(fname, lname, tier, price):
+def updateMember(member_id, fname, lname, tier, price):
     with app.app_context():
         fname = fname.strip()
         lname = lname.strip()
         #find member in Member db
-        member = Member.query.filter(func.lower(Member.first_name) == func.lower(fname), 
-                             func.lower(Member.last_name) == func.lower(lname)).first()
+        member = Member.query.filter(Member.member_id == member_id).first()
         if member:
             #update member info -> this will need to be changed
             member.first_name=fname
@@ -143,6 +160,7 @@ def fetchMemberInfo():
         members_info = []
         for member, price, tier_name in query:
             member_info = {
+                'member_id': member.member_id,
                 'first_name': member.first_name,
                 'last_name': member.last_name,
                 'price': price,
@@ -150,6 +168,19 @@ def fetchMemberInfo():
             }
             members_info.append(member_info)
     return members_info
+
+def deleteMember(member_id):
+    with app.app_context():
+        print(member_id)
+        member = Member.query.filter(Member.member_id == member_id).first()
+        if member:
+            membership = Membership.query.filter_by(member_id=member_id).first()
+            if membership:
+                db.session.delete(membership)
+            db.session.delete(member)
+            db.session.commit()
+
+
 
 # this will be used for snack management to view inventory
 #will probably have to add query results to a array to display on webpage

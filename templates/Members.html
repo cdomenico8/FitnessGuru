@@ -21,17 +21,26 @@
             <td>{{ member.last_name }}</td>
             <td>{{ member.tier_name }}</td>
             <td>{{ member.price }}</td>
-            <td><a href="/update_member?first_name={{member.first_name}}&last_name={{member.last_name}}
+            <td><a href="/update_member?member_id={{member.member_id}}&first_name={{member.first_name}}&last_name={{member.last_name}}
             &tier_name={{member.tier_name}}&price={{member.price}}">Update</a></td>
+            <td>
+                <form action="/delete_member" method="POST">
+                <input type="hidden" name="member_id" value="{{ member.member_id }}">
+                <button type="submit">Delete</button>
+            </form></td>
         </tr>
     {% endfor %}
 </table>
 <h2>Add a New Member:</h2>
 <form action="/addMember" method="POST">
-    First Name: <input type="text" name="name" value="">
-    Last Name: <input type="instructor" name="size" value="">
-    Tier: <input type="text" name="time" value="">
-    Price: <input type="text" name="time" value="">
+    First Name: <input type="text" name="first_name" value="">
+    Last Name: <input type="instructor" name="last_name" value="">
+    Tier: <select name="tier_name">
+        <option value="silver">Silver</option>
+        <option value="gold">Gold</option>
+        <option value="diamond">Diamond</option>
+    </select>
+    Price: <input type="text" name="price" value="">
     <input type="submit">
 </form>
 {% endblock %}
