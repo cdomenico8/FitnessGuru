@@ -14,6 +14,11 @@
             <td>{{ snack.unit_price }}</td>
             <td>{{ snack.snack_count }}</td>
             <td><a href="/updateSnack">update</a></td>
+            <td>
+                <form action="/delete_snack" method="POST">
+                <input type="hidden" name="member_id" value="{{ Snacks.snack_id }}">
+                <button type="submit">Delete</button>
+            </td>
         </tr>
     {% endfor %}
 </table>
