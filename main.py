@@ -50,6 +50,12 @@ def delete_member():
     deleteMember(member_id)
     return redirect('/')
 
+@app.route('/delete_snack', methods=['POST'])
+def delete_snack():
+    snack_id = request.form.get('snack_id')
+    deleteSnack(snack_id)
+    return redirect('/snacks')
+
 
 @app.route('/update_member')
 def update_member():
@@ -171,7 +177,6 @@ def fetchMemberInfo():
 
 def deleteMember(member_id):
     with app.app_context():
-        print(member_id)
         member = Member.query.filter(Member.member_id == member_id).first()
         if member:
             membership = Membership.query.filter_by(member_id=member_id).first()
@@ -180,6 +185,12 @@ def deleteMember(member_id):
             db.session.delete(member)
             db.session.commit()
 
+def deleteSnack(snack_id):
+    with app.app_context():
+        snack = Snacks.query.filter(Snacks.snack_id == snack_id).first()
+        if snack:
+            db.session.delete(snack)
+        db.session.commit()
 
 
 # this will be used for snack management to view inventory
@@ -193,7 +204,8 @@ def fetchSnackInfo():
             snack_info = {
                 'snack_name': snack.snack_name,
                 'snack_count': snack.snack_count,
-                'unit_price': snack.unit_price
+                'unit_price': snack.unit_price,
+                'snack_id': snack.snack_id
             }
             snacks_info.append(snack_info)
     return snacks_info

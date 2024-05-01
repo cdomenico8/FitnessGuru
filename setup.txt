@@ -1,0 +1,13 @@
+To Install Git:
+winget install --id Git.Git -e --source winget
+
+To Clone Repo:
+git clone https://github.com/kaisser24/BLM_Project
+
+To Install Python:
+https://www.python.org/downloads/
+
+To Install Python Libraries:
+pip install flask
+pip install pyglet
+python -m pip show sqlalchemy
