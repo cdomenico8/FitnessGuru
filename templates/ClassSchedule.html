@@ -1,25 +1,233 @@
 {% extends "base.html" %}
 {% block title %} Class {% endblock %}
 {% block content %}
-<h2>Fitness Class Schedule:</h2>
-<br></br>
-<table>
-    <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Instructor</th>
-        <th>Time</th>
-        <th>Days</th>
-    </tr>
-    {% for i in dataBase %}
+<style>
+
+.weeklySchedule {
+            max-width: 600px;
+            margin: 20px auto;
+        }
+        h1 {
+            text-align: center;
+            color: #303030;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+        
+</style>
+
+<div class="weeklySchedule">
+    <h1>Fitness Guru Weekly Class Schedule</h1>
+    <h2>Monday</h2>
+    <table>
         <tr>
-            <td>{{ i.id }}</td>
-            <td>{{ i.Name }}</td>
-            <td>{{ i.Instructor }}</td>
-            <td>{{i.Time}}</td>
-            <td>{{i.Days}}</td>
-            <td><a href="/delete/{{i.id}}">delete</a></td>
+            <th>Time</th>
+            <th>Class</th>
+            <th>Instructor</th>
         </tr>
-    {% endfor %}
-</table>
+        <tr>
+            <td>8:00 AM - 9:00 AM</td>
+            <td>Yoga</td>
+            <td>John Doe</td>
+        </tr>
+        <tr>
+            <td>9:30 AM - 10:30 AM</td>
+            <td>Zumba</td>
+            <td>Jane Smith</td>
+        </tr>
+        <tr>
+            <td>5:00 PM - 6:00 PM</td>
+            <td>Cycling</td>
+            <td>Daniel Martinez</td>
+        </tr>
+        <tr>
+            <td>6:30 PM - 7:30 PM</td>
+            <td>Cross Fit</td>
+            <td>Isabella Lee</td>
+        </tr>
+    </table>
+
+    <h2>Tuesday</h2>
+    <table>
+        <tr>
+            <th>Time</th>
+            <th>Class</th>
+            <th>Instructor</th>
+        </tr>
+        <tr>
+            <td>8:00 AM - 9:00 AM</td>
+            <td>Yoga</td>
+            <td>John Doe</td>
+        </tr>
+        <tr>
+            <td>9:30 AM - 10:30 AM</td>
+            <td>Aerobics</td>
+            <td>Jane Smith</td>
+        </tr>
+        <tr>
+            <td>5:00 PM - 6:00 PM</td>
+            <td>Circuit Training</td>
+            <td>Daniel Martinez</td>
+        </tr>
+        <tr>
+            <td>6:30 PM - 7:30 PM</td>
+            <td>HIIT</td>
+            <td>Isabella Lee</td>
+        </tr>
+    </table>
+
+    <h2>Wednesday</h2>
+    <table>
+        <tr>
+            <th>Time</th>
+            <th>Class</th>
+            <th>Instructor</th>
+        </tr>
+        <tr>
+            <td>08:00 AM - 09:00 AM</td>
+            <td>Yoga</td>
+            <td>John Doe</td>
+        </tr>
+        <tr>
+            <td>9:30 AM - 10:30 AM</td>
+            <td>Zumba</td>
+            <td>Jane Smith</td>
+        </tr>
+        <tr>
+            <td>5:00 PM - 6:00 PM</td>
+            <td>Cycling</td>
+            <td>Daniel Martinez</td>
+        </tr>
+        <tr>
+            <td>6:30 PM - 7:30 PM</td>
+            <td>Cross Fit</td>
+            <td>Isabella Lee</td>
+        </tr>
+    </table>
+
+    <h2>Thursday</h2>
+    <table>
+        <tr>
+            <th>Time</th>
+            <th>Class</th>
+            <th>Instructor</th>
+        </tr>
+        <tr>
+            <td>8:00 AM - 9:00 AM</td>
+            <td>Yoga</td>
+            <td>John Doe</td>
+        </tr>
+        <tr>
+            <td>9:30 AM - 10:30 AM</td>
+            <td>Aerobics</td>
+            <td>Jane Smith</td>
+        </tr>
+        <tr>
+            <td>5:00 PM - 6:00 PM</td>
+            <td>Circuit Training</td>
+            <td>Daniel Martinez</td>
+        </tr>
+        <tr>
+            <td>6:30 PM - 7:30 PM</td>
+            <td>HIIT</td>
+            <td>Isabella Lee</td>
+        </tr>
+    </table>
+
+    <h2>Friday</h2>
+    <table>
+        <tr>
+            <th>Time</th>
+            <th>Class</th>
+            <th>Instructor</th>
+        </tr>
+        <tr>
+            <td>8:00 AM - 9:00 AM</td>
+            <td>Yoga</td>
+            <td>John Doe</td>
+        </tr>
+        <tr>
+            <td>9:30 AM - 10:30 AM</td>
+            <td>Zumba</td>
+            <td>Jane Smith</td>
+        </tr>
+        <tr>
+            <td>5:00 PM - 6:00 PM</td>
+            <td>Cycling</td>
+            <td>Daniel Martinez</td>
+        </tr>
+        <tr>
+            <td>6:30 PM - 7:30 PM</td>
+            <td>Cross Fit</td>
+            <td>Isabella Lee</td>
+        </tr>
+    </table>
+
+    <h2>Saturday</h2>
+    <table>
+        <tr>
+            <th>Time</th>
+            <th>Class</th>
+            <th>Instructor</th>
+        </tr>
+        <tr>
+            <td>8:00 AM - 9:00 AM</td>
+            <td>Yoga</td>
+            <td>John Doe</td>
+        </tr>
+        <tr>
+            <td>9:30 AM - 10:30 AM</td>
+            <td>Aerobics</td>
+            <td>Jane Smith</td>
+        </tr>
+        <tr>
+            <td>5:00 PM - 6:00 PM</td>
+            <td>Circuit Training</td>
+            <td>Daniel Martinez</td>
+        </tr>
+        <tr>
+            <td>6:30 PM - 7:30 PM</td>
+            <td>HIIT</td>
+            <td>Isabella Lee</td>
+        </tr>
+    </table>
+
+    <h2>Sunday</h2>
+    <table>
+        <tr>
+            <th>Time</th>
+            <th>Class</th>
+            <th>Instructor</th>
+        </tr>
+        <tr>
+            <td>8:00 AM - 9:00 AM</td>
+            <td>Yoga</td>
+            <td>John Doe</td>
+        </tr>
+        <tr>
+            <td>9:30 AM - 10:30 AM</td>
+            <td>Aerobics</td>
+            <td>Jane Smith</td>
+        </tr>
+        <tr>
+            <td>5:00 PM - 6:00 PM</td>
+            <td>Cycling</td>
+            <td>Daniel Martinez</td>
+        </tr>
+        <tr>
+            <td>6:30 PM - 7:30 PM</td>
+            <td>Cross Fit</td>
+            <td>Isabella Lee</td>
+        </tr>
+    </table>
+</div>
+    
 {% endblock %}
